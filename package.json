@@ -4,14 +4,15 @@
   "description": "Enter an address and see a visualization of walking radius",
   "main": "index.js",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist/*",
     "build": "parcel build src/index.html",
     "clean": "rimraf .cache",
-    "prestart": "rimraf dist",
+    "prestart": "rimraf dist/*",
     "start": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mike Niebling",
+  "repository": "https://github.com/mniebling/walkability.git",
   "license": "MIT",
   "devDependencies": {
     "parcel": "1.12.4",
