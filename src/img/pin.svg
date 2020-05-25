@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="32px" viewBox="0 0 22 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pin</title>
+    <g id="pin" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M11,1.75 C8.44512934,1.75 6.13191398,2.77857435 4.45755673,4.44221375 C2.78494825,6.10411558 1.75,8.39989574 1.75,10.9359883 C1.75,14.4224711 8.81645563,26.071113 10.9997075,29.5868753 C13.1825241,26.0727948 20.25,14.4227228 20.25,10.9359883 C20.25,8.40380611 19.213738,6.10706895 17.5396302,4.44367744 C15.8655329,2.78029626 13.5535189,1.75 11,1.75 Z" id="Oval" stroke="#DF9111" stroke-width="1.5" fill="#FABE5A"></path>
+        <ellipse id="Oval" stroke="#DF9111" stroke-width="1.5" fill="#FEECCE" cx="11" cy="11.0962462" rx="4" ry="4.03849846"></ellipse>
+    </g>
+</svg>

@@ -1,0 +1,22 @@
+{
+  "name": "walkability",
+  "version": "1.0.0",
+  "description": "Enter an address and see a visualization of walking radius",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf .cache",
+    "prestart": "rimraf dist",
+    "start": "parcel src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Niebling",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "1.12.4",
+    "rimraf": "3.0.2"
+  },
+  "dependencies": {
+    "leaflet": "1.6.0",
+    "leaflet-geosearch": "3.0.4"
+  }
+}
