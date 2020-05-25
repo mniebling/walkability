@@ -4,6 +4,8 @@
   "description": "Enter an address and see a visualization of walking radius",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "parcel build src/index.html",
     "clean": "rimraf .cache",
     "prestart": "rimraf dist",
     "start": "parcel src/index.html",
