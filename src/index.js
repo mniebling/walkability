@@ -1,7 +1,7 @@
 import leaflet from 'leaflet'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 
-import { getPosition } from './utils/get-position'
+import { getPosition, getRectangles } from './utils'
 import pinImageUrl from './img/pin.svg'
 import pinShadowUrl from './img/marker-shadow.png'
 
@@ -17,10 +17,10 @@ map.addLayer(tileLayer)
 // Set up geosearch
 const searchProvider = new OpenStreetMapProvider()
 const pinIcon = leaflet.icon({
-  iconAnchor: [20, 31],
+  iconAnchor: [11, 31],
   iconSize: [22, 34],
   iconUrl: pinImageUrl,
-  shadowAnchor: [16, 33],
+  shadowAnchor: [8, 33],
   shadowSize: [22, 34],
   shadowUrl: pinShadowUrl,
 })
@@ -42,9 +42,21 @@ const searchControl = new GeoSearchControl({
 
 map.addControl(searchControl)
 
+// Actually draw the rectangles after a user selects a location
+let rectangles = []
+
+map.on('geosearch/showlocation', event => {
+  // Remove old ones from the map (if there are any already there)
+  rectangles.forEach(r => r.remove())
+
+  // Fetch and add the new ones
+  rectangles = getRectangles(event.location.y, event.location.x)
+  rectangles.forEach(r => r.addTo(map))
+})
+
 // Get user's initial position, or use default if geolocation fails (e.g., user denies permission)
 const startLocation = {}
-const START_ZOOM = 15
+const START_ZOOM = 14
 
 getPosition()
   .then(position => {
@@ -57,5 +69,4 @@ getPosition()
   })
   .finally(() => {
     map.setView([startLocation.latitude, startLocation.longitude], START_ZOOM)
-    // leaflet.marker([startLocation.latitude, startLocation.longitude], { icon: pinIcon }).addTo(map) // test marker
   })
