@@ -1,7 +1,7 @@
 import leaflet from 'leaflet'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 
-import { getPosition, getRectangles } from './utils'
+import { getPosition, getRectangles, getSearchBounds } from './utils'
 import pinImageUrl from './img/pin.svg'
 import pinShadowUrl from './img/marker-shadow.png'
 
@@ -14,8 +14,6 @@ const tileLayer = leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/
 
 map.addLayer(tileLayer)
 
-// Set up geosearch
-const searchProvider = new OpenStreetMapProvider()
 const pinIcon = leaflet.icon({
   iconAnchor: [11, 31],
   iconSize: [22, 34],
@@ -24,23 +22,6 @@ const pinIcon = leaflet.icon({
   shadowSize: [22, 34],
   shadowUrl: pinShadowUrl,
 })
-
-const searchControl = new GeoSearchControl({
-  autoClose: true,
-  autoComplete: true,
-  autoCompleteDelay: 250,
-  keepResult: true,
-  marker: {
-    draggable: false,
-    icon: pinIcon,
-  },
-  provider: searchProvider,
-  retainZoomLevel: true,
-  showMarker: true,
-  style: 'bar',
-})
-
-map.addControl(searchControl)
 
 // Actually draw the rectangles after a user selects a location
 let rectangles = []
@@ -64,9 +45,36 @@ getPosition()
     startLocation.longitude = position.coords.longitude
   })
   .catch(() => {
-    startLocation.latitude = 41.97  // Chicago
+    startLocation.latitude = 41.97 // Chicago
     startLocation.longitude = -87.68
   })
   .finally(() => {
     map.setView([startLocation.latitude, startLocation.longitude], START_ZOOM)
+
+    console.info(`Starting location: https://www.google.com/maps/place/${startLocation.latitude},${startLocation.longitude}`)
+
+    // Setting up the search after the initial position is known so that we can
+    // constrain search results to a rectangle based on the user's position.
+    const searchProvider = new OpenStreetMapProvider({
+      params: {
+        viewbox: getSearchBounds(startLocation.latitude, startLocation.longitude)
+      },
+    })
+
+    const searchControl = new GeoSearchControl({
+      autoClose: true,
+      autoComplete: true,
+      autoCompleteDelay: 500,
+      keepResult: true,
+      marker: {
+        draggable: false,
+        icon: pinIcon,
+      },
+      provider: searchProvider,
+      retainZoomLevel: true,
+      showMarker: true,
+      style: 'bar',
+    })
+
+    map.addControl(searchControl)
   })

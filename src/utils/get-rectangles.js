@@ -45,3 +45,23 @@ function getLatLngsFromBounds(bounds) {
     bounds.getNorthWest(),
   ]
 }
+
+/**
+ * @param {number} lat Latitude
+ * @param {number} lng Longitude
+ * @returns {string} The viewbox of a large bounding area to constrain valid
+ * searches around a location.
+ */
+export function getSearchBounds(lat, lng) {
+
+  const centerLatLng = leaflet.latLng(lat, lng)
+  const searchBounds = centerLatLng.toBounds(MILE * 15)
+
+  const p1 = searchBounds.getSouthWest()
+  const p2 = searchBounds.getNorthEast()
+  const viewbox = `${p1.lat},${p1.lng},${p2.lat},${p2.lng}`
+
+  console.info(`Search boundary: http://bboxfinder.com/#${viewbox}`)
+
+  return viewbox
+}
