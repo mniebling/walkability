@@ -8,8 +8,9 @@ import pinShadowUrl from './img/marker-shadow.png'
 
 // Set up Leaflet map with OSM tiles
 const map = leaflet.map('map')
-const tileLayer = leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const tileLayer = leaflet.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
   attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+  detectRetina: true,
 })
 
 map.addLayer(tileLayer)
